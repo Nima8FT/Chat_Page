@@ -48,6 +48,7 @@ body {
   border-radius: 5px;
   margin-bottom: 10px;
   border: 1px solid #f5c6cb;
+  /* display: none; */
 }
 
 .form form .name-details {
@@ -109,6 +110,11 @@ form .name-details .field:last-child {
   top: 70%;
   transform: translateY(-50%);
   cursor: pointer;
+}
+
+.form form .field i.active::before {
+  color: #333;
+  content: "\f070";
 }
 
 .form .link {
@@ -194,6 +200,14 @@ form .name-details .field:last-child {
   font-size: 16px;
   border-radius: 5px;
   outline: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: all ease 0.3s;
+}
+
+.users .search input.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .users .search button {
@@ -201,11 +215,21 @@ form .name-details .field:last-child {
   height: 42px;
   border: none;
   outline: none;
-  color: #fff;
-  background: #333;
+  color: #333;
+  background: #fff;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
   font-size: 17px;
+  transition: all 0.2s ease;
+}
+
+.users .search button.active {
+  color: #fff;
+  background: #333;
+}
+
+.users .search button.active i::before {
+  content: "\f00d";
 }
 
 .users-list {
@@ -256,9 +280,9 @@ form .name-details .field:last-child {
 }
 
 .chat-area header .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat-area header .back-icon {
@@ -335,28 +359,28 @@ form .name-details .field:last-child {
 }
 
 .chat-area .typing-area {
-    padding: 18px 30px;
-    display: flex;
-    justify-content: space-between;
+  padding: 18px 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .typing-area input {
-    height: 45px;
-    width: calc(100% - 58px);
-    font-size: 17px;
-    border: 1px solid #ccc;
-    padding: 0 13px;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+  height: 45px;
+  width: calc(100% - 58px);
+  font-size: 17px;
+  border: 1px solid #ccc;
+  padding: 0 13px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
 }
 
 .typing-area button {
-    width: 55px;
-    border: none;
-    outline: none;
-    background: #333;
-    color: #fff;
-    font-size: 19px;
-    cursor: pointer;
-    border-radius: 0 5px 5px 0;
+  width: 55px;
+  border: none;
+  outline: none;
+  background: #333;
+  color: #fff;
+  font-size: 19px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
 }
