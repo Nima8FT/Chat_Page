@@ -28,24 +28,25 @@ if (!empty($fname) && !empty($lname) && !empty($email) && !empty($password)) {
                     $time = time();
                     $new_img_name = $time . $img_name;
 
-                    // if (move_uploaded_file($tmp_name, "images/" $new_img_name)) {
+                    // if (move_uploaded_file($tmp_name, "images/" . $new_img_name)) {
                     $status = "Active now";
                     $random_id = rand(time(), 10000000);
 
                     $sql2 = mysqli_query($con, "INSERT INTO users (unique_id,fname,lname,email,password,img,status) VALUES ({$random_id},'{$fname}','{$lname}','{$email}','{$password}','{$new_img_name}','{$status}')");
 
                     if ($sql2) {
-                        $sql3 = mysqli_query($con, "SELECT * FROM users WHERER email = '{$email}'");
+                        $sql3 = mysqli_query($con, "SELECT * FROM users WHERE email = '{$email}'");
                         if (mysqli_num_rows($sql3) > 0) {
                             $row = mysqli_fetch_array($sql3);
-                            // $_SESSION['unique_id'] = $row['unique_id'];
+                            $_SESSION['unique_id'] = $row['unique_id'];
+                            echo "success";
                         }
-                        // } else {
-                        //     echo "Something went wrong";
-                        // }
                     } else {
-                        echo "move upload file";
+                        echo "Something went wrong";
                     }
+                    // } else {
+                    //     echo "move upload file";
+                    // }
                 } else {
                     echo "Please select an image file - jpeg , jpg , png";
                 }

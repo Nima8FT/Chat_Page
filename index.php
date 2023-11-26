@@ -19,32 +19,32 @@
         <div class="name-details">
           <div class="field input">
             <label>First Name</label>
-            <input type="text" placeholder="First Name" name="fname" required/>
+            <input type="text" placeholder="First Name" name="fname" required />
           </div>
           <div class="field input">
             <label>Last Name</label>
-            <input type="text" placeholder="Last Name" name="lname" required/>
+            <input type="text" placeholder="Last Name" name="lname" required />
           </div>
         </div>
         <div class="field input">
           <label>Email</label>
-          <input type="text" placeholder="Email" name="email" required/>
+          <input type="text" placeholder="Email" name="email" required />
         </div>
         <div class="field input">
           <label>Password</label>
-          <input type="password" placeholder="Password" name="password" required/>
+          <input type="password" placeholder="Password" name="password" required />
           <i class="fas fa-eye"></i>
         </div>
         <div class="field image">
           <label>Select Image</label>
-          <input type="file" name="images" required/>
+          <input type="file" name="images" required />
         </div>
         <div class="field button">
           <input type="submit" value="continue to chat" />
         </div>
       </form>
 
-      <div class="link">Already signed up? <a href="#">Login now</a></div>
+      <div class="link">Already signed up? <a href="login.php">Login now</a></div>
     </section>
   </div>
 </body>
