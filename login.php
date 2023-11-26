@@ -19,11 +19,11 @@
           <div class="error-txt">this is an error message!</div>
           <div class="field input">
             <label>Email</label>
-            <input type="text" placeholder="Email" />
+            <input type="text" placeholder="Email" name="email"/>
           </div>
           <div class="field input">
             <label>Password</label>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" name="password"/>
             <i class="fas fa-eye"></i>
           </div>
           <div class="field button">
@@ -36,4 +36,5 @@
     </div>
   </body>
   <script src="./javascript/pass-show-hide.js"></script>
+  <script src="./javascript/login.js"></script>
 </html>
