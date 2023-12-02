@@ -1,0 +1,101 @@
+$bg_main: #f7f7f7;
+$white: #fff;
+$border_light: #e6e6e6;
+$warning_txt: #721c24;
+$warning_border: #f5c6cb;
+$warning_bg: #f8d7da;
+$border_dark:#ccc;
+$bg_btn: #333;
+$online: #468669;
+$msg: #67676a;
+$dark: black;
+
+$popins: popins;
+$popins_bold: popins-bold;
+
+@font-face {
+    font-family: popins;
+    src: url("../fonts/Poppins-Light.ttf");
+}
+
+@font-face {
+    font-family: popins-bold;
+    src: url("../fonts/Poppins-Bold.ttf");
+}
+
+@mixin width-height($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin flex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin text($font, $size, $color) {
+    font-family: $font;
+    font-size: $size;
+    color: $color;
+}
+
+%full_space {
+    width: 100%;
+    height: 100%;
+}
+
+%none {
+    display: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: $popins;
+}
+
+body {
+    @include flex();
+    min-height: 100vh;
+    background: $bg_main;
+}
+
+a {
+    color: $white;
+    text-decoration: none;
+    transition: all ease-in-out 0.2s;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+li {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+
+    outline: none;
+}
+
+input {
+    outline: none;
+}
+
+.box-chat {
+    @include width-height(40%, auto);
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+        0 32px 64px -48px rgba(0, 0, 0, 0.5);
+
+    img {
+        object-fit: cover;
+        border-radius: 50%;
+    }
+}
