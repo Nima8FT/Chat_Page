@@ -5,16 +5,17 @@ $warning_txt: #721c24;
 $warning_border: #f5c6cb;
 $warning_bg: #f8d7da;
 $border_dark:#ccc;
-$arrow: #333;
+$bg_btn: #333;
 $online: #468669;
 $msg: #67676a;
+$dark: black;
 
 $popins: popins;
 $popins_bold: popins-bold;
 
 @font-face {
     font-family: popins;
-    src: url("../fonts/Poppins-Regular.ttf");
+    src: url("../fonts/Poppins-Light.ttf");
 }
 
 @font-face {
@@ -56,6 +57,8 @@ $popins_bold: popins-bold;
 }
 
 body {
+    @include flex();
+    min-height: 100vh;
     background: $bg_main;
 }
 
@@ -76,9 +79,18 @@ li {
 
 button {
     cursor: pointer;
+
     outline: none;
 }
 
 input {
     outline: none;
+}
+
+.box-chat {
+    @include width-height(40%, auto);
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+        0 32px 64px -48px rgba(0, 0, 0, 0.5);
 }

@@ -1,0 +1,95 @@
+// signup
+.form {
+    padding: 25px 30px;
+
+    header {
+        @include text($popins_bold, 25px, $dark);
+        padding-bottom: 10px;
+        border-bottom: 1px solid $border_light;
+    }
+
+    form {
+        margin: 20px 0;
+
+        .err-txt {
+            @extend %none;
+            color: $warning_txt;
+            background: $warning_bg;
+            padding: 8px 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid $warning_border;
+        }
+
+        .field {
+            display: flex;
+            position: relative;
+            flex-direction: column;
+            margin-bottom: 10px;
+
+            label {
+                margin-bottom: 2px;
+            }
+
+            i {
+                position: absolute;
+                right: 15px;
+                color: $border_dark;
+                top: 70%;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+
+            i.active::before {
+                content: "\f070";
+                color: $bg_btn;
+            }
+        }
+
+        .txt {
+            input {
+                @include width-height(100%, 40px);
+                font-size: 16px;
+                padding: 0 10px;
+                border: 1px solid $border_dark;
+                border-radius: 5px;
+            }
+        }
+
+        .img input {
+            font-size: 17px;
+        }
+
+        .btn {
+            @include flex();
+
+            button {
+                @include width-height(100%, 45px);
+                @include text($popins, 17px, $bg_btn);
+                margin-top: 13px;
+                border: 1px solid $bg_btn;
+                border-radius: 5px;
+                background: $white;
+                transition: all ease-in-out 0.2s;
+
+                &:hover {
+                    background: $bg_btn;
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .link {
+        text-align: center;
+        margin: 10px 0;
+        font-size: 17px;
+
+        a {
+            font-family: $popins;
+            color: $bg_btn;
+        }
+    }
+
+}
