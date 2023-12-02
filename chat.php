@@ -23,7 +23,7 @@ include_once("header.php");
           <img src="php/images/<?php echo $row['img'] ?>" alt="" />
           <div class="details">
             <span>
-              <?php echo $row['fname'] . " " . $row['$lname'] ?>
+              <?php echo $row['fname'] . " " . $row['lname'] ?>
             </span>
             <p>
               <?php echo $row['status'] ?>
