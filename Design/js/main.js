@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   $("#eyes").click(function (e) {
     var txt_type = $("#pass").attr("type");
     if (txt_type == "password") {
@@ -11,5 +10,10 @@ $(document).ready(function () {
     }
   });
 
-  
+  $(".search button").click(function (e) {
+    $(".search input").toggleClass("active");
+    $(".search input").focus();
+    $(".search button").toggleClass("active");
+    $(".search input").val("");
+  });
 });
