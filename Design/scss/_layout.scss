@@ -227,3 +227,115 @@
     }
 
 }
+
+// chat
+.chat-area {
+
+    header {
+        @include flex();
+        justify-content: flex-start;
+        padding: 18px 30px;
+
+        .content {
+            @include flex();
+        }
+
+        .back-icon {
+            font-size: 18px;
+            color: $bg_btn;
+        }
+
+        img {
+            @include width-height(45px, 45px);
+            margin: 0 15px;
+        }
+
+        span {
+            font-size: 17px;
+            font-weight: 600;
+        }
+    }
+
+    .chat-zone {
+        @include width-height(auto, 500px);
+        overflow-y: auto;
+        background: $bg_main;
+        padding: 10px 30px 20px 30px;
+        box-shadow: inset 0 32px 32px -32px rgba(0 0 0 /5%),
+            inset 0 -32px 32px -32px rgba(0 0 0 / 5%);
+
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .chat {
+            margin: 15px 0;
+
+            p {
+                padding: 8px 16px;
+                box-shadow: 0 0 32px rgba(0 0 0 /8%),
+                    inset 0 16px 16px -16px rgba(0 0 0 / 10%);
+                word-wrap: break-word;
+            }
+        }
+
+        .outgoing {
+            @include flex();
+
+            .details {
+                margin-left: auto;
+                max-width: calc(100% - 130px);
+
+                p {
+                    background: $bg_btn;
+                    color: $white;
+                    border-radius: 18px 18px 0 18px;
+                }
+            }
+        }
+
+        .incoming {
+            @include flex();
+            align-items: flex-end;
+
+            img {
+                @include width-height(35px, 35px);
+            }
+
+            .details {
+                margin-left: 10px;
+                margin-right: auto;
+                max-width: calc(100% - 130px);
+
+                p {
+                    background: $white;
+                    color: $bg_btn;
+                    border-radius: 18px 18px 18px 0;
+                }
+            }
+        }
+    }
+
+    .typing-area {
+        @include flex();
+        padding: 18px 30px;
+        justify-content: space-between;
+
+        input {
+            @include width-height(calc(100% - 50px), 45px);
+            font-size: 17px;
+            border: 1px solid $border_dark;
+            padding: 0 13px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        button {
+            @include width-height(55px, 45px);
+            @include text($popins, 19px, $white);
+            border: none;
+            background: $bg_btn;
+            border-radius: 0 5px 5px 0;
+        }
+    }
+
+}
