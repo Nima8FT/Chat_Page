@@ -1,19 +1,31 @@
-<?php require_once("./Assets/php/header.php"); ?>
+<?php
+
+require_once("./Assets/php/header.php");
+
+if (isset($_SESSION['Login'])) {
+    ReDirect('user.php');
+}
+
+if (isset($_POST) && !empty($_POST)) {
+    Login($_POST['email'], $_POST['pass']);
+}
+
+?>
 
 <section class="form login">
     <header>Login</header>
 
-    <form action="#">
-        <div class="err-txt">This is an error message</div>
+    <form action="login.php" method="POST">
+        <?php MSG(); ?>
 
         <div class="field txt">
             <label>Email</label>
-            <input type="text" placeholder="Email" name="email" />
+            <input type="text" placeholder="Email" name="email" required />
         </div>
 
         <div class="field txt">
             <label>Password</label>
-            <input id="pass" type="password" placeholder="Password" name="pass" />
+            <input id="pass" type="password" placeholder="Password" name="pass" required />
             <i id="eyes" class="fas fa-eye"></i>
         </div>
 

@@ -1,4 +1,12 @@
-<?php require_once("./Assets/php/header.php"); ?>
+<?php
+
+require_once("./Assets/php/header.php");
+
+if (!isset($_SESSION['Login'])) {
+    ReDirect('login.php');
+}
+
+?>
 
 <section class="users">
     <header>

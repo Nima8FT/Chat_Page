@@ -114,6 +114,44 @@ function Insert($Table, $POST)
     echo $response;
 }
 
+function Update($Table, $POST, $Id)
+{
+    unset($_POST['id']);
+    $Fields = "";
+    $Values = "";
+    $i = 1;
+
+    foreach ($POST as $key => $val) {
+        if ($val == "") {
+            unset($POST[$key]);
+        }
+    }
+
+    foreach ($POST as $key => $val) {
+        if (count($POST) == $i) {
+            $Fields .= $key;
+            $Values .= $val;
+        } else {
+            $Fields .= $key . '<#>';
+            $Values .= $val . '<#>';
+        }
+        $i++;
+    }
+
+    $response = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "UPDATE",
+            "Table" => $Table,
+            "ID" => $Id,
+            "Fields" => $Fields,
+            "Values" => $Values
+        )
+    );
+
+    echo $response;
+}
+
 function Find($Table, $Fields, $Values, $isFix, $isArr)
 {
     $response = ReqAPI(

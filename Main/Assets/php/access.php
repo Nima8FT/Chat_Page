@@ -25,6 +25,7 @@ function Signup($Table, $POST)
                         UploadFiles(strval($POST['unique_id']), $Table);
                         $POST['img'] = $_POST['img'];
                         Insert($Table, $POST);
+                        ReDirect('login.php');
                     } else {
                         $_SESSION['err'] = 'please upload photos';
                         ReDirect('signup.php');
@@ -47,7 +48,28 @@ function Signup($Table, $POST)
     }
 }
 
+function Login($username, $password)
+{
+    if (
+        isset($username) && !empty($username) &&
+        isset($password) && !empty($password)
+    ) {
+        $login = Find('users', 'email', $username, true, false);
+        if ($login && password_verify($password, $login['password'])) {
+            if ($login['status'] !== 'Active') {
+                $status['status'] = 'Active';
+                Update('users', $status, $login['id']);
+            }
+            $_SESSION['Login'] = $login;
+            ReDirect('user.php');
+        } else {
+            $_SESSION['err'] = 'username or password is not correct';
+        }
+    } else {
+        $_SESSION['err'] = 'all input field are required!';
+    }
 
+}
 
 
 ?>

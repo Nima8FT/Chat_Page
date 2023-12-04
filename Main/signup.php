@@ -1,9 +1,21 @@
-<?php require_once("./Assets/php/header.php"); ?>
+<?php
+
+require_once("./Assets/php/header.php");
+
+if (isset($_SESSION['Login'])) {
+    ReDirect('user.php');
+}
+
+if (isset($_POST) && !empty($_POST)) {
+    Signup('users', $_POST);
+}
+
+?>
 
 <section class="form signup">
     <header>Create Account</header>
 
-    <form action="login.php" method="POST" enctype="multipart/form-data">
+    <form action="signup.php" method="POST" enctype="multipart/form-data">
         <?php MSG() ?>
 
         <input type="text" name="unique_id" value="1" style="display: none;">
@@ -35,13 +47,12 @@
         </div>
 
         <div class="field txt">
-            <input type="text" name="Table" value="users" style="display: none;">
             <input type="text" name="img" value="aaa" style="display: none;">
             <input type="text" name="status" value="Active" style="display: none;">
         </div>
 
         <div class="field btn">
-            <button type="submit" name="action" value="insert">create account</button>
+            <button type="submit">create account</button>
         </div>
     </form>
 
