@@ -12,7 +12,6 @@
         margin: 20px 0;
 
         .err-txt {
-            @extend %none;
             color: $warning_txt;
             background: $warning_bg;
             padding: 8px 10px;
