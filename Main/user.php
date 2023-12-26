@@ -9,16 +9,8 @@ if (!isset($_SESSION['Login'])) {
 ?>
 
 <section class="users">
-    <header>
-        <div class="content">
-            <img src="./Assets/images/img.jpg" alt="Profile" />
-            <div class="details">
-                <span>Nima Malakootikhah</span>
-                <p>Active now</p>
-            </div>
-        </div>
-        <a href="#" class="logout">Logout</a>
-    </header>
+
+    <?php HeadUsers() ?>
 
     <div class="search">
         <span class="txt">Select an user to chat</span>
@@ -26,62 +18,7 @@ if (!isset($_SESSION['Login'])) {
         <button class=""><i class="fas fa-search"></i></button>
     </div>
 
-    <div class="users-list">
-        <a href="#">
-            <div class="content">
-                <img src="./Assets/images/img.jpg" alt="Profile" />
-                <div class="details">
-                    <span>Fateme Malakootikhah</span>
-                    <p>messages</p>
-                </div>
-            </div>
-            <div class="status-dot"><i class="fas fa-circle"></i></div>
-        </a>
-
-        <a href="#">
-            <div class="content">
-                <img src="./Assets/images/img.jpg" alt="Profile" />
-                <div class="details">
-                    <span>Fateme Malakootikhah</span>
-                    <p>messages</p>
-                </div>
-            </div>
-            <div class="status-dot"><i class="fas fa-circle"></i></div>
-        </a>
-
-        <a href="#">
-            <div class="content">
-                <img src="./Assets/images/img.jpg" alt="Profile" />
-                <div class="details">
-                    <span>Fateme Malakootikhah</span>
-                    <p>messages</p>
-                </div>
-            </div>
-            <div class="status-dot"><i class="fas fa-circle"></i></div>
-        </a>
-
-        <a href="#">
-            <div class="content">
-                <img src="./Assets/images/img.jpg" alt="Profile" />
-                <div class="details">
-                    <span>Fateme Malakootikhah</span>
-                    <p>messages</p>
-                </div>
-            </div>
-            <div class="status-dot"><i class="fas fa-circle"></i></div>
-        </a>
-
-        <a href="#">
-            <div class="content">
-                <img src="./Assets/images/img.jpg" alt="Profile" />
-                <div class="details">
-                    <span>Fateme Malakootikhah</span>
-                    <p>messages</p>
-                </div>
-            </div>
-            <div class="status-dot"><i class="fas fa-circle"></i></div>
-        </a>
-    </div>
+    <?php MainUsers() ?>
 </section>
 
 <?php require_once("./Assets/php/footer.php"); ?>

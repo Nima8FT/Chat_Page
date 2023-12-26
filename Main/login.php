@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
     </form>
 
     <div class="link">
-        Not yet signed up? <a href="signup.html">Signup now</a>
+        Not yet signed up? <a href="signup.php">Signup now</a>
     </div>
 </section>
 

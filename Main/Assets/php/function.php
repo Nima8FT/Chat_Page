@@ -13,11 +13,11 @@ function ReqAPI($url, $data)
 {
     $opts = array(
         'http' =>
-            array(
-                'method' => 'POST',
-                'header' => 'Content-type: application/x-www-form-urlencoded',
-                'content' => http_build_query($data)
-            )
+        array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($data)
+        )
     );
     $context = stream_context_create($opts);
     $result = file_get_contents($url, false, $context);
@@ -29,11 +29,11 @@ function ReqAPI1($url, $data)
 {
     $opts = array(
         'http' =>
-            array(
-                'method' => 'POST',
-                'header' => 'Content-type: application/x-www-form-urlencoded',
-                'content' => http_build_query($data)
-            )
+        array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($data)
+        )
     );
     $context = stream_context_create($opts);
     $result = file_get_contents($url, false, $context);
@@ -169,4 +169,78 @@ function Find($Table, $Fields, $Values, $isFix, $isArr)
     return $response;
 }
 
-?>
+function HeadUsers()
+{
+
+    $id = $_SESSION['Login']['unique_id'];
+
+    $response = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "QUERY",
+            "Query" => 'SELECT * FROM users WHERE unique_id = ' . $id
+        )
+    );
+
+    $img = $response['img'];
+    $split_img = explode('/', $img);
+    $name_img = $split_img[count($split_img) - 1];
+
+    $html = '
+    <header>
+        <div class="content">
+            <img src="./Assets/images/' . $name_img . '" alt="Profile" />
+            <div class="details">
+                <span>' . $response['fname'] . ' ' . $response['lname'] . '</span>
+                <p>' . $response['status'] . '</p>
+            </div>
+        </div>
+        <a href="Assets/php/access.php?logout=' . $response['id'] . '" class="logout">Logout</a>
+    </header>
+    ';
+
+    echo $html;
+}
+
+function MainUsers()
+{
+    $id = $_SESSION['Login']['unique_id'];
+
+    $response = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "QUERY",
+            "Query" => 'SELECT * FROM users WHERE NOT unique_id = ' . $id
+        )
+    );
+
+    $html = '<div class="users-list">';
+
+    for ($i = 0; $i < count($response); $i++) {
+
+        $db = $response[$i];
+
+        $img = $db['img'];
+        $split_img = explode('/', $img);
+        $name_img = $split_img[count($split_img) - 1];
+
+        ($db['status'] == 'Offline') ? $status = 'offline' : $status = '';
+
+        $html .= '
+        <a href="chat.php?id=' . $db['id'] . '">
+            <div class="content">
+                <img src="./Assets/images/' . $name_img . '" alt="Profile" />
+                <div class="details">
+                    <span>' . $db['fname'] . ' ' . $db['lname'] . '</span>
+                    <p>messages</p>
+                </div>
+            </div>
+            <div class="status-dot ' . $status . '"><i class="fas fa-circle"></i></div>
+        </a>
+        ';
+    }
+
+    $html .= '</div>';
+
+    echo $html;
+}

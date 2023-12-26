@@ -3,6 +3,13 @@
 session_start();
 require_once('function.php');
 
+if (isset($_GET) && !empty($_GET)) {
+    $id = $_SESSION['Login']['id'];
+    if ($_GET['logout'] == $id) {
+        Logout($id);
+    }
+}
+
 function Signup($Table, $POST)
 {
     if (
@@ -68,8 +75,13 @@ function Login($username, $password)
     } else {
         $_SESSION['err'] = 'all input field are required!';
     }
-
 }
 
-
-?>
+function Logout($id)
+{
+    $POST['status'] = "Offline";
+    Update('users', $POST, $id);
+    session_unset();
+    session_destroy();
+    ReDirect('../../login.php');
+}

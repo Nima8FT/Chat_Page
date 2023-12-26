@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 require_once("./Assets/php/header.php");
 
-if(!isset($_SESSION['Login'])) {
+if (!isset($_SESSION['Login'])) {
     ReDirect('login.php');
 }
 
