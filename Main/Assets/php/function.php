@@ -214,26 +214,25 @@ function MainUsers()
         )
     );
 
-    // $response2 = ReqAPI(
-    //     'http://localhost/Chat_Page/Api/index.php',
-    //     array(
-    //         "Mode" => "QUERY",
-    //         "Query" => 'SELECT * FROM messages WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') ORDER BY id DESC LIMIT 1'
-    //     )
-    // );
-
-    // var_dump($response2);
-
     $html = '<div class="users-list">';
 
     for ($i = 0; $i < count($response); $i++) {
 
         $db = $response[$i];
 
+        $response2 = ReqAPI(
+            'http://localhost/Chat_Page/Api/index.php',
+            array(
+                "Mode" => "QUERY",
+                "Query" => 'SELECT * FROM `messages` WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') AND (incoming_msg_id = ' . $db['id'] . ' OR outgoing_msg_id = ' . $db['id'] . ') ORDER BY id DESC LIMIT 1'
+            )
+        );
+
         $img = $db['img'];
         $split_img = explode('/', $img);
         $name_img = $split_img[count($split_img) - 1];
-
+        (strlen($response2['msg']) > 28) ? $msg = substr($response2['msg'], 0, 28) : $msg = $response2['msg'];
+        ($id == $response2['outgoing_msg_id']) ? $you = 'You: ' : $you = '';
         ($db['status'] == 'Offline') ? $status = 'offline' : $status = '';
 
         $html .= '
@@ -242,7 +241,7 @@ function MainUsers()
                 <img src="./Assets/images/' . $name_img . '" alt="Profile" />
                 <div class="details">
                     <span>' . $db['fname'] . ' ' . $db['lname'] . '</span>
-                    <p>messages</p>
+                    <p>' . $you . $msg . '</p>
                 </div>
             </div>
             <div class="status-dot ' . $status . '"><i class="fas fa-circle"></i></div>
