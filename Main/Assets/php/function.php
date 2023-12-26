@@ -172,13 +172,13 @@ function Find($Table, $Fields, $Values, $isFix, $isArr)
 function HeadUsers()
 {
 
-    $id = $_SESSION['Login']['unique_id'];
+    $id = $_SESSION['Login']['id'];
 
     $response = ReqAPI(
         'http://localhost/Chat_Page/Api/index.php',
         array(
             "Mode" => "QUERY",
-            "Query" => 'SELECT * FROM users WHERE unique_id = ' . $id
+            "Query" => 'SELECT * FROM users WHERE id = ' . $id
         )
     );
 
@@ -204,15 +204,25 @@ function HeadUsers()
 
 function MainUsers()
 {
-    $id = $_SESSION['Login']['unique_id'];
+    $id = $_SESSION['Login']['id'];
 
     $response = ReqAPI(
         'http://localhost/Chat_Page/Api/index.php',
         array(
             "Mode" => "QUERY",
-            "Query" => 'SELECT * FROM users WHERE NOT unique_id = ' . $id
+            "Query" => 'SELECT * FROM users WHERE NOT id = ' . $id
         )
     );
+
+    // $response2 = ReqAPI(
+    //     'http://localhost/Chat_Page/Api/index.php',
+    //     array(
+    //         "Mode" => "QUERY",
+    //         "Query" => 'SELECT * FROM messages WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') ORDER BY id DESC LIMIT 1'
+    //     )
+    // );
+
+    // var_dump($response2);
 
     $html = '<div class="users-list">';
 

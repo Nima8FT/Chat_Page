@@ -13,7 +13,6 @@ if (isset($_GET) && !empty($_GET)) {
 function Signup($Table, $POST)
 {
     if (
-        isset($POST['unique_id']) && !empty($POST['unique_id']) &&
         isset($POST['fname']) && !empty($POST['fname']) &&
         isset($POST['email']) && !empty($POST['email']) &&
         isset($POST['lname']) && !empty($POST['lname']) &&
@@ -21,7 +20,6 @@ function Signup($Table, $POST)
         isset($POST['img']) && !empty($POST['img']) &&
         isset($POST['status']) && !empty($POST['status'])
     ) {
-        $POST['unique_id'] = rand(time(), 10000000);
         if (filter_var($POST['email'], FILTER_VALIDATE_EMAIL)) {
             if (strlen($POST['password']) > 7) {
                 $password = password_hash($POST['password'], PASSWORD_DEFAULT);
@@ -29,8 +27,9 @@ function Signup($Table, $POST)
                 $find_email = Find($Table, 'email', $POST['email'], true, false);
                 if ($find_email == false) {
                     if (isset($_FILES)) {
-                        UploadFiles(strval($POST['unique_id']), $Table);
+                        UploadFiles(strval($POST['id']), $Table);
                         $POST['img'] = $_POST['img'];
+                        $POST['status'] = "Offline";
                         Insert($Table, $POST);
                         ReDirect('login.php');
                     } else {

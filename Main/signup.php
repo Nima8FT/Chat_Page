@@ -18,8 +18,6 @@ if (isset($_POST) && !empty($_POST)) {
     <form action="signup.php" method="POST" enctype="multipart/form-data">
         <?php MSG() ?>
 
-        <input type="text" name="unique_id" value="1" style="display: none;">
-
         <div class="field txt">
             <label>First Name</label>
             <input type="text" placeholder="First Name" name="fname" required />
