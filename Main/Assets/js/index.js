@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "Assets/php/function.php?search=true.php", true);
+    xhr.open("POST", "Assets/php/function.php?search=true", true);
     xhr.onload = () => {
       if (xhr.readyState == XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
@@ -40,4 +40,14 @@ $(document).ready(function () {
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send("search_term=" + search_term);
   });
+
+
+  $('.chat-zone').mouseenter(function () {
+    $('.chat-zone').addClass('active');
+  });
+
+  $('.chat-zone').mouseleave(function () {
+    $('.chat-zone').removeClass('active');
+  });
+
 });

@@ -12,8 +12,7 @@ define('HOST', $_SERVER['SERVER_NAME']);
 if (isset($_GET) && !empty($_GET)) {
     if ($_GET['search'] == true) {
         Search();
-    }
-    else if($_GET['mainusers'] == true) {
+    } else if ($_GET['mainusers'] == true) {
         MainUsers();
     }
 }
@@ -241,7 +240,7 @@ function MainUsers()
         $split_img = explode('/', $img);
         $name_img = $split_img[count($split_img) - 1];
         (strlen($response2['msg']) > 28) ? $msg = substr($response2['msg'], 0, 28) : $msg = $response2['msg'];
-        ($id == $response2['outgoing_msg_id']) ? $you = 'You: ' : $you = '';
+        ($id == $response2['incoming_msg_id']) ? $you = 'You: ' : $you = '';
         ($db['status'] == 'Offline') ? $status = 'offline' : $status = '';
         if ($response2['msg'] == null) {
             $msg = "No message not yet";
@@ -355,6 +354,82 @@ function Search()
     }
 
     $html .= '</div>';
+
+    echo $html;
+}
+
+function HeadChat($id)
+{
+    $response = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "QUERY",
+            "Query" => 'SELECT * FROM users WHERE id = ' . $id
+        )
+    );
+
+    $img = $response['img'];
+    $split_img = explode('/', $img);
+    $name_img = $split_img[count($split_img) - 1];
+
+    $html = '
+    <a href="user.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
+    <div class="content">
+        <img src="Assets/images/' . $name_img . '" alt="Profile" />
+        <div class="details">
+            <span>' . $response['fname'] . ' ' . $response['lname'] . '</span>
+            <p>' . $response['status'] . '</p>
+        </div>
+    </div>
+    ';
+
+    echo $html;
+}
+
+function MainChat($my_id, $user_id)
+{
+    $response = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "QUERY",
+            "Query" => "SELECT * FROM messages LEFT JOIN users ON users.id = messages.outgoing_msg_id
+            WHERE (incoming_msg_id = {$my_id} AND outgoing_msg_id = {$user_id})
+             OR (incoming_msg_id = {$user_id} AND outgoing_msg_id = {$my_id}) 
+             ORDER BY messages.id ASC"
+        )
+    );
+
+    $html = '';
+
+    if ($response != false) {
+        for ($i = 0; $i < count($response); $i++) {
+            $db = $response[$i];
+
+            $img = $db['img'];
+            $split_img = explode('/', $img);
+            $name_img = $split_img[count($split_img) - 1];
+
+            if ($db['outgoing_msg_id'] == $user_id) {
+                $html .= '
+            <div class="chat outgoing">
+                <div class="details">
+                    <p>' . $db['msg'] . '</p>
+                </div>
+            </div>
+            ';
+            } else {
+                $html .= '
+            <div class="chat incoming">
+                <img src="./Assets/images/' . $name_img . '" alt="Profile" />
+                <div class="details">
+                    <p>' . $db['msg'] . '</p>
+                </div>
+            </div>
+            ';
+            }
+        }
+    }
+
 
     echo $html;
 }
