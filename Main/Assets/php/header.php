@@ -3,6 +3,10 @@
 require_once('function.php');
 require_once('access.php');
 
+if (isset($_POST) && !empty($_POST)) {
+    Insert('messages', $_POST);
+}
+
 ?>
 
 <!DOCTYPE html>

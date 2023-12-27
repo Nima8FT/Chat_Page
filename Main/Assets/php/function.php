@@ -17,6 +17,12 @@ if (isset($_GET) && !empty($_GET)) {
     }
 }
 
+if (isset($_POST) && !empty($_POST)) {
+    if (isset($_POST['outgoing_msg_id']) && isset($_POST['incoming_msg_id'])) {
+        MainChat($_POST['incoming_msg_id'], $_POST['outgoing_msg_id']);
+    }
+}
+
 function ReqAPI($url, $data)
 {
     $opts = array(
@@ -247,7 +253,7 @@ function MainUsers()
         }
 
         $html .= '
-        <a href="chat.php?id=' . $db['id'] . '">
+        <a href="chat.php?id=' . $db['id'] . '" class="row-user">
             <div class="content">
                 <img src="./Assets/images/' . $name_img . '" alt="Profile" />
                 <div class="details">
@@ -429,7 +435,6 @@ function MainChat($my_id, $user_id)
             }
         }
     }
-
 
     echo $html;
 }

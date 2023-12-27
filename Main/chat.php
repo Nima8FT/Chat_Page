@@ -22,8 +22,8 @@ $user_id = $_GET['id'];
     </div>
 
     <form action="#" class="typing-area">
-        <input type="text" name="outgoing_id" value="<?php echo $my_id ?>" hidden>
-        <input type="text" name="incoming_id" value="<?php echo $user_id; ?>" hidden>
+        <input type="text" name="outgoing_msg_id" value="<?php echo $user_id; ?>" hidden>
+        <input type="text" name="incoming_msg_id" value="<?php echo $my_id; ?>" hidden>
         <input type="text" name="msg" class="txt-msg" placeholder="type a message here ...">
         <button class="send-btn"><i class="fab fa-telegram-plane"></i></button>
     </form>
