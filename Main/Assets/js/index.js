@@ -4,6 +4,8 @@ $(document).ready(function () {
 
   // alert('nima');
 
+  var is_search = false;
+
   $("#eyes").click(function (e) {
     var txt_type = $("#pass").attr("type");
     if (txt_type == "password") {
@@ -32,20 +34,18 @@ $(document).ready(function () {
     }
 
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "Assets/php/function.php?search=true", true);
-    xhr.onload = () => {
-      if (xhr.readyState == XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          let data = xhr.response;
-          $('.users-list').html(data);
-        }
+    $.ajax({
+      url: 'Assets/php/function.php?search=true',
+      type: 'POST',
+      data: { search_term: search_term },
+      success: function (data) {
+        $('.users-list').html(data);
+      },
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       }
-    };
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("search_term=" + search_term);
+    });
   });
-
 
   $('.chat-zone').mouseenter(function () {
     $('.chat-zone').addClass('active');
@@ -66,38 +66,41 @@ $(document).ready(function () {
   });
 
   setInterval(() => {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "Assets/php/function.php", true);
-    xhr.onload = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          let data = xhr.response;
-          $('.chat-zone').html(data);
-          var clas = $('.chat-zone').attr('class');
-          var split_class = clas.split(" ");
-          if (split_class != "active") {
-            Scroll();
-          }
+    $.ajax({
+      url: 'Assets/php/function.php',
+      type: 'POST',
+      data: new FormData(form),
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        $('.chat-zone').html(data);
+        var clas = $('.chat-zone').attr('class');
+        var split_class = clas.split(" ");
+        if (split_class != "active") {
+          Scroll();
         }
       }
-    };
-    let formData = new FormData(form);
-    xhr.send(formData);
+    });
   }, 500);
 
 
   setInterval(() => {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "Assets/php/user.php", true);
-    xhr.onload = () => {
-      if (xhr.readyState == XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          let data = xhr.response;
+    var txt_search = $('.search input').val()
+    if (txt_search != '') {
+      is_search = true;
+    }
+    else {
+      is_search = false;
+    }
+    if (is_search == false) {
+      $.ajax({
+        url: 'Assets/php/user.php',
+        type: 'POST',
+        success: function (data) {
           $('.users-list').html(data);
         }
-      }
-    };
-    xhr.send();
+      });
+    }
   }, 500);
 
 });
@@ -108,18 +111,16 @@ function Scroll() {
 }
 
 function SendMsg() {
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "Assets/php/header.php", true);
-  xhr.onload = () => {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        let data = xhr.response;
-        $('.chat-zone').html(data);
-        $('.txt-msg').val('');
-        Scroll();
-      }
+  $.ajax({
+    url: 'Assets/php/header.php',
+    type: 'POST',
+    data: new FormData(form),
+    processData: false,
+    contentType: false,
+    success: function (data) {
+      $('.chat-zone').html(data);
+      $('.txt-msg').val('');
+      Scroll();
     }
-  };
-  let formData = new FormData(form);
-  xhr.send(formData);
+  });
 }

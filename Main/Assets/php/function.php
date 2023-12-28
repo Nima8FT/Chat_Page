@@ -227,29 +227,30 @@ function MainUsers($id)
 
     $html = '<div class="users-list">';
 
-    for ($i = 0; $i < count($response); $i++) {
+    if ($response['fname'] == null) {
+        for ($i = 0; $i < count($response); $i++) {
 
-        $db = $response[$i];
+            $db = $response[$i];
 
-        $response2 = ReqAPI(
-            'http://localhost/Chat_Page/Api/index.php',
-            array(
-                "Mode" => "QUERY",
-                "Query" => 'SELECT * FROM `messages` WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') AND (incoming_msg_id = ' . $db['id'] . ' OR outgoing_msg_id = ' . $db['id'] . ') ORDER BY id DESC LIMIT 1'
-            )
-        );
+            $response2 = ReqAPI(
+                'http://localhost/Chat_Page/Api/index.php',
+                array(
+                    "Mode" => "QUERY",
+                    "Query" => 'SELECT * FROM `messages` WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') AND (incoming_msg_id = ' . $db['id'] . ' OR outgoing_msg_id = ' . $db['id'] . ') ORDER BY id DESC LIMIT 1'
+                )
+            );
 
-        $img = $db['img'];
-        $split_img = explode('/', $img);
-        $name_img = $split_img[count($split_img) - 1];
-        (strlen($response2['msg']) > 28) ? $msg = substr($response2['msg'], 0, 28) : $msg = $response2['msg'];
-        ($id == $response2['incoming_msg_id']) ? $you = 'You: ' : $you = '';
-        ($db['status'] == 'Offline') ? $status = 'offline' : $status = '';
-        if ($response2['msg'] == null) {
-            $msg = "No message not yet";
-        }
+            $img = $db['img'];
+            $split_img = explode('/', $img);
+            $name_img = $split_img[count($split_img) - 1];
+            (strlen($response2['msg']) > 28) ? $msg = substr($response2['msg'], 0, 28) : $msg = $response2['msg'];
+            ($id == $response2['incoming_msg_id']) ? $you = 'You: ' : $you = '';
+            ($db['status'] == 'Offline') ? $status = 'offline' : $status = '';
+            if ($response2['msg'] == null) {
+                $msg = "No message not yet";
+            }
 
-        $html .= '
+            $html .= '
         <a href="chat.php?id=' . $db['id'] . '" class="row-user">
             <div class="content">
                 <img src="./Assets/images/' . $name_img . '" alt="Profile" />
@@ -261,8 +262,40 @@ function MainUsers($id)
             <div class="status-dot ' . $status . '"><i class="fas fa-circle"></i></div>
         </a>
         ';
-    }
+        }
+    } else {
+        $response2 = ReqAPI(
+            'http://localhost/Chat_Page/Api/index.php',
+            array(
+                "Mode" => "QUERY",
+                "Query" => 'SELECT * FROM `messages` WHERE (incoming_msg_id = ' . $id . ' OR outgoing_msg_id = ' . $id . ') AND (incoming_msg_id = ' . $response['id'] . ' OR outgoing_msg_id = ' . $response['id'] . ') ORDER BY id DESC LIMIT 1'
+            )
+        );
 
+        $img = $response['img'];
+        $split_img = explode('/', $img);
+        $name_img = $split_img[count($split_img) - 1];
+        (strlen($response2['msg']) > 28) ? $msg = substr($response2['msg'], 0, 28) : $msg = $response2['msg'];
+        ($id == $response2['incoming_msg_id']) ? $you = 'You: ' : $you = '';
+        (
+            $response['status'] == 'Offline') ? $status = 'offline' : $status = '';
+        if ($response2['msg'] == null) {
+            $msg = "No message not yet";
+        }
+
+        $html .= '
+    <a href="chat.php?id=' . $response['id'] . '" class="row-user">
+        <div class="content">
+            <img src="./Assets/images/' . $name_img . '" alt="Profile" />
+            <div class="details">
+                <span>' . $response['fname'] . ' ' . $response['lname'] . '</span>
+                <p>' . $you . $msg . '</p>
+            </div>
+        </div>
+        <div class="status-dot ' . $status . '"><i class="fas fa-circle"></i></div>
+    </a>
+    ';
+    }
     $html .= '</div>';
 
     echo $html;
@@ -402,21 +435,54 @@ function MainChat($my_id, $user_id)
         )
     );
 
+    $response2 = ReqAPI(
+        'http://localhost/Chat_Page/Api/index.php',
+        array(
+            "Mode" => "QUERY",
+            "Query" => "SELECT img FROM users WHERE id = {$user_id}"
+        )
+    );
+
     $html = '';
 
     if ($response != false) {
-        for ($i = 0; $i < count($response); $i++) {
-            $db = $response[$i];
+        if ($response['msg'] == null) {
+            for ($i = 0; $i < count($response); $i++) {
+                $db = $response[$i];
 
-            $img = $db['img'];
+                $img = $response2['img'];
+                $split_img = explode('/', $img);
+                $name_img = $split_img[count($split_img) - 1];
+
+                if ($db['outgoing_msg_id'] == $user_id) {
+                    $html .= '
+                <div class="chat outgoing">
+                    <div class="details">
+                        <p>' . $db['msg'] . '</p>
+                    </div>
+                </div>
+                ';
+                } else {
+                    $html .= '
+                <div class="chat incoming">
+                    <img src="./Assets/images/' . $name_img . '" alt="Profile" />
+                    <div class="details">
+                        <p>' . $db['msg'] . '</p>
+                    </div>
+                </div>
+                ';
+                }
+            }
+        } else {
+            $img = $response2['img'];
             $split_img = explode('/', $img);
             $name_img = $split_img[count($split_img) - 1];
 
-            if ($db['outgoing_msg_id'] == $user_id) {
+            if ($response['outgoing_msg_id'] == $user_id) {
                 $html .= '
             <div class="chat outgoing">
                 <div class="details">
-                    <p>' . $db['msg'] . '</p>
+                    <p>' . $response['msg'] . '</p>
                 </div>
             </div>
             ';
@@ -425,7 +491,7 @@ function MainChat($my_id, $user_id)
             <div class="chat incoming">
                 <img src="./Assets/images/' . $name_img . '" alt="Profile" />
                 <div class="details">
-                    <p>' . $db['msg'] . '</p>
+                    <p>' . $response['msg'] . '</p>
                 </div>
             </div>
             ';

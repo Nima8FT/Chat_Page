@@ -27,7 +27,8 @@ function Signup($Table, $POST)
                 $find_email = Find($Table, 'email', $POST['email'], true, false);
                 if ($find_email == false) {
                     if (isset($_FILES)) {
-                        UploadFiles(strval($POST['id']), $Table);
+                        $img_name = $POST['fname'] . time();
+                        UploadFiles($img_name, $Table);
                         $POST['img'] = $_POST['img'];
                         $POST['status'] = "Offline";
                         Insert($Table, $POST);
