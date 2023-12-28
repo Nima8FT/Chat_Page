@@ -65,7 +65,6 @@ $(document).ready(function () {
     SendMsg();
   });
 
-
   setInterval(() => {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "Assets/php/function.php", true);
@@ -84,6 +83,21 @@ $(document).ready(function () {
     };
     let formData = new FormData(form);
     xhr.send(formData);
+  }, 500);
+
+
+  setInterval(() => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "Assets/php/user.php", true);
+    xhr.onload = () => {
+      if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          let data = xhr.response;
+          $('.users-list').html(data);
+        }
+      }
+    };
+    xhr.send();
   }, 500);
 
 });

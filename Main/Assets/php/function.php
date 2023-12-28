@@ -9,11 +9,13 @@ define('HomeURL', '../');
 define('URL', $URL);
 define('HOST', $_SERVER['SERVER_NAME']);
 
+$id = $_SESSION['Login']['id'];
+
 if (isset($_GET) && !empty($_GET)) {
     if ($_GET['search'] == true) {
         Search();
     } else if ($_GET['mainusers'] == true) {
-        MainUsers();
+        MainUsers($id);
     }
 }
 
@@ -183,11 +185,8 @@ function Find($Table, $Fields, $Values, $isFix, $isArr)
     return $response;
 }
 
-function HeadUsers()
+function HeadUsers($id)
 {
-
-    $id = $_SESSION['Login']['id'];
-
     $response = ReqAPI(
         'http://localhost/Chat_Page/Api/index.php',
         array(
@@ -216,10 +215,8 @@ function HeadUsers()
     echo $html;
 }
 
-function MainUsers()
+function MainUsers($id)
 {
-    $id = $_SESSION['Login']['id'];
-
     $response = ReqAPI(
         'http://localhost/Chat_Page/Api/index.php',
         array(
